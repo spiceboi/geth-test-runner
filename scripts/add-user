@@ -1,0 +1,3 @@
+#!/bin/sh
+
+geth account new --password ./scripts/password
