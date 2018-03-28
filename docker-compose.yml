@@ -2,19 +2,27 @@ version: '2.1'
 # docker-compose up --build --abort-on-container-exit
 services:
   geth:
-    image: ethereum/client-go
-    entrypoint: ["geth", "--dev", "--rpc", "--rpcaddr", "0.0.0.0"]
+    build:
+      context: .
+      dockerfile: Dockerfile.geth
+    entrypoint: [
+      "geth",
+      "--dev",
+      "--config", "/usr/src/geth-config.toml",
+      "--rpc",
+      "--rpcaddr", "0.0.0.0",
+      "--datadir", "/usr/src/.ethereum"]
     volumes:
-      - "./.ethereum:/root/.ethereum"
+      - "./.ethereum:/usr/src/.ethereum"
     ports:
       - "8545:8545"
       - "30303:30303"
-  test-runner:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    entrypoint: sh -c './wait-for geth:8545 -- ./run-scripts'
-    depends_on:
-      - geth
-    links:
-      - geth
+  # test-runner:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.test-runner
+  #   entrypoint: sh -c './wait-for geth:8545 -- ./run-scripts'
+  #   depends_on:
+  #     - geth
+  #   links:
+  #     - geth
