@@ -24,8 +24,14 @@ const createAccounts = async () => {
   console.log('accounts setup complete')
 }
 
-try {
-    createAccounts()
-} catch(e) {
-    console.log(e)
+const init = async () => {
+  try {
+    await createAccounts()
+    process.exit()
+  } catch(e) {
+    console.error(e)
+    process.exit(1)
+  }
 }
+
+init()
