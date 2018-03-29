@@ -1,5 +1,0 @@
-FROM ethereum/client-go
-
-COPY geth-config.toml genesis.json /usr/src/
-
-RUN geth init /usr/src/genesis.json

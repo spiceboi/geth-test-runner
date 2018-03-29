@@ -1,0 +1,27 @@
+{
+  "name": "geth-test-runner",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/spiceboi/geth-test-runner.git",
+  "author": "smc <trappist.spice@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "nodemon": "^1.17.2"
+  },
+  "scripts": {
+    "start": "babel-node --presets=env ./src/index.js",
+    "dev": "nodemon --exec npm run babel-node -- ./src/index.js",
+    "build": "babel src -d dist"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "dependencies": {
+    "web3": "^1.0.0-beta.33"
+  }
+}
