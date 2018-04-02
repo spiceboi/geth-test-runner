@@ -28,18 +28,10 @@ const init = async () => {
     await createAccounts()
     process.exit()
   } catch(e) {
-    console.log('geth:', process.eng.GETH)
+    console.log('geth:', process.env.GETH)
     console.error(e)
+    process.exit(1)
   }
 }
-/*
-let interval 
-interval = setInterval(async () => {
-  try {
-    await init()
-  }
-  catch (e) {}
-}, 2000)
-*/
 init()
 
