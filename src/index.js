@@ -1,9 +1,8 @@
 const Web3 = require('web3')
 
-const gethHost = process.env['GETH_HOST']
-const web3 = new Web3(`ws://${gethHost || 'localhost'}:8546`)
-
 const createAccounts = async () => {
+  const web3 = new Web3(`ws://${process.env.GETH}:8546`)
+
   const maxAccounts = 10
 
   const accounts = await web3.eth.getAccounts()
@@ -29,9 +28,18 @@ const init = async () => {
     await createAccounts()
     process.exit()
   } catch(e) {
+    console.log('geth:', process.eng.GETH)
     console.error(e)
-    process.exit(1)
   }
 }
-
+/*
+let interval 
+interval = setInterval(async () => {
+  try {
+    await init()
+  }
+  catch (e) {}
+}, 2000)
+*/
 init()
+

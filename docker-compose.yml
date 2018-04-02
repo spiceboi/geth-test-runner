@@ -1,5 +1,5 @@
-version: '2.1'
-# docker-compose up --build --abort-on-container-exit
+version: '3.0'
+# docker-compose up geth-dev
 services:
   geth:
     image: ethereum/client-go
@@ -8,16 +8,9 @@ services:
       - "8545:8545"
       - "8546:8546"
       - "30303:30303"
-  test-runner:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    entrypoint: sh -c './wait-for geth:8546 -- npm start'
+  geth-dev:
+    image: speakerwiggin/generate-geth-accounts:latest
     environment:
-      GETH_HOST: geth
-    volumes:
-      - './src:/usr/src/geth-test-runner/src'
+      GETH: geth
     depends_on:
-      - geth
-    links:
       - geth
