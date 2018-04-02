@@ -1,19 +1,39 @@
 # Geth Test Runner
 
-Containerized geth client and test script runner using Docker and go-ethereum.
+Containerized geth client and test script runner using Docker, go-ethereum, and Javascript.
 
-Docker Compose runs a geth client in dev mode, and exposes RPC endpoints, so scripts can either use the `geth` cli or RPC payloads. When all scripts have run, the cluster spins down.
+Docker Compose runs a geth client in dev mode, and exposes RPC and WebSocket endpoints, so linked services have access to geth on the `geth` host.
 
 ### Prerequisites
 
-Docker, docker-compose
+Docker, docker-compose, Node
 
 ### Installing
 
-You may need to make some scripts executable:
+You may need to make this script executable:
 
-`chmod +x run-scripts wait-for scripts/*`
+`chmod +x wait-for`
 
-## Running the tests scripts
+## Running with docker-compose
 
 `docker-compose up --build --abort-on-container-exit`
+
+## Local Development
+
+Requires local eth client up and running.
+
+```
+"scripts": {
+    "start": "babel-node --presets=latest ./src/index.js",
+    "dev": "nodemon --exec npm run babel-node -- ./src/index.js",
+    "build": "babel src -d dist"
+  },
+```
+
+## Building Docker Image
+
+`docker build -t geth-test-runner:latest .`
+
+## Running Docker Image
+
+`docker run -e "GETH_HOST=localhost" geth-test-runner:latest`
